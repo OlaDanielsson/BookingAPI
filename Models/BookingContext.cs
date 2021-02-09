@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookingAPI.Models;
 
 namespace BookingAPI.Models
 {
@@ -14,6 +15,8 @@ namespace BookingAPI.Models
         {
 
         }
+
+        public DbSet<BookingAPI.Models.RoomModel> RoomModel { get; set; }
 
         
     }

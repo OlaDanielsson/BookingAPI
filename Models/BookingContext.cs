@@ -18,6 +18,6 @@ namespace BookingAPI.Models
 
         public DbSet<BookingAPI.Models.RoomModel> RoomModel { get; set; }
 
-        
+        public DbSet<BookingAPI.Models.CategoryModel> CategoryModel { get; set; }       
     }
 }

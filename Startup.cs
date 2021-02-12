@@ -28,7 +28,7 @@ namespace BookingAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<BookingContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("BookingDBConnection")));
+                (options => options.UseSqlite(Configuration.GetConnectionString("SqLite")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

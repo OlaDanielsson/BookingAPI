@@ -11,47 +11,47 @@ namespace BookingAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RoomModelsController : ControllerBase
+    public class BookingModelsController : ControllerBase
     {
         private readonly BookingContext _context;
 
-        public RoomModelsController(BookingContext context)
+        public BookingModelsController(BookingContext context)
         {
             _context = context;
         }
 
-        // GET: api/RoomModels
+        // GET: api/BookingModels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomModel>>> GetRoomModel()
+        public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModel()
         {
-            return await _context.RoomModel.ToListAsync();
+            return await _context.BookingModel.ToListAsync();
         }
 
-        // GET: api/RoomModels/5
+        // GET: api/BookingModels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RoomModel>> GetRoomModel(int id)
+        public async Task<ActionResult<BookingModel>> GetBookingModel(int id)
         {
-            var roomModel = await _context.RoomModel.FindAsync(id);
+            var bookingModel = await _context.BookingModel.FindAsync(id);
 
-            if (roomModel == null)
+            if (bookingModel == null)
             {
                 return NotFound();
             }
 
-            return roomModel;
+            return bookingModel;
         }
 
-        // PUT: api/RoomModels/5
+        // PUT: api/BookingModels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomModel(int id, RoomModel roomModel)
+        public async Task<IActionResult> PutBookingModel(int id, BookingModel bookingModel)
         {
-            if (id != roomModel.Id)
+            if (id != bookingModel.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(roomModel).State = EntityState.Modified;
+            _context.Entry(bookingModel).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace BookingAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoomModelExists(id))
+                if (!BookingModelExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace BookingAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/RoomModels
+        // POST: api/BookingModels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RoomModel>> PostRoomModel(RoomModel roomModel)
+        public async Task<ActionResult<BookingModel>> PostBookingModel(BookingModel bookingModel)
         {
-            _context.RoomModel.Add(roomModel);
+            _context.BookingModel.Add(bookingModel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRoomModel", new { id = roomModel.Id }, roomModel);
+            return CreatedAtAction("GetBookingModel", new { id = bookingModel.Id }, bookingModel);
         }
 
-        // DELETE: api/RoomModels/5
+        // DELETE: api/BookingModels/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRoomModel(int id)
+        public async Task<IActionResult> DeleteBookingModel(int id)
         {
-            var roomModel = await _context.RoomModel.FindAsync(id);
-            if (roomModel == null)
+            var bookingModel = await _context.BookingModel.FindAsync(id);
+            if (bookingModel == null)
             {
                 return NotFound();
             }
 
-            _context.RoomModel.Remove(roomModel);
+            _context.BookingModel.Remove(bookingModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool RoomModelExists(int id)
+        private bool BookingModelExists(int id)
         {
-            return _context.RoomModel.Any(e => e.Id == id);
+            return _context.BookingModel.Any(e => e.Id == id);
         }
     }
 }

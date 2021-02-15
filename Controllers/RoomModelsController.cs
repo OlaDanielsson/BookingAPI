@@ -20,7 +20,7 @@ namespace BookingAPI.Controllers
             _context = context;
         }
 
-        // GET: api/RoomModels
+        // GET: RoomModels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomModel>>> GetRoomModel()
         {
@@ -72,7 +72,7 @@ namespace BookingAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/RoomModels
+        // POST: apiRoomModels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<RoomModel>> PostRoomModel(RoomModel roomModel)

@@ -24,7 +24,7 @@ namespace BookingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModel()
         {
-            return await _context.BookingModel.ToListAsync();
+            return await _context.BookingModel.Include(x => x.Category).ToListAsync();
         }
 
         // GET: api/BookingModels/5

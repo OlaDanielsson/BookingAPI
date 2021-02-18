@@ -11,7 +11,8 @@ namespace BookingAPI.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int RoomId { get; set; }
-        public int GuestId { get; set; } 
+        public int GuestId { get; set; }
+        public CategoryModel Category { get; set; }
         public RoomModel Room { get; set; } // Koppling till RoomModel
     }
 }

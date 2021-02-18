@@ -24,7 +24,7 @@ namespace BookingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomModel>>> GetRoomModel()
         {
-            return await _context.RoomModel.ToListAsync();
+            return await _context.RoomModel.Include(x => x.Category).ToListAsync();
         }
 
         // GET: api/RoomModels/5

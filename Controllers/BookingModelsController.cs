@@ -41,6 +41,21 @@ namespace BookingAPI.Controllers
             return bookingModel;
         }
 
+        
+        [Route("/BookingModels")] // lagt till detta stycke
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModelById(int id)
+        {
+            var bookingModel = await _context.BookingModel.Where(e => e.GuestId == id).ToListAsync();
+
+            if (bookingModel.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return bookingModel;
+        }
+
         // PUT: api/BookingModels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

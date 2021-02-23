@@ -20,11 +20,12 @@ namespace BookingAPI.Controllers
             _context = context;
         }
 
+
         // GET: api/RoomModels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomModel>>> GetRoomModel()
         {
-            return await _context.RoomModel.Include(x => x.Category).ToListAsync();
+            return await _context.RoomModel.ToListAsync(); // Det finns fel i kod
         }
 
         // GET: api/RoomModels/5

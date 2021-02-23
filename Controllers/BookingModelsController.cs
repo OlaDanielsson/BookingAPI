@@ -24,7 +24,7 @@ namespace BookingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModel()
         {
-            return await _context.BookingModel.Include(x => x.Category).ToListAsync();
+            return await _context.BookingModel.ToListAsync();
         }
 
         // GET: api/BookingModels/5
@@ -42,18 +42,18 @@ namespace BookingAPI.Controllers
         }
 
         
-        [Route("/BookingModels")] // lagt till detta stycke
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModelById(int id)
-        {
-            var bookingModel = await _context.BookingModel.Where(e => e.GuestId == id).ToListAsync();
+        [HttpGet("/BookingModels/GuestId")]
 
-            if (bookingModel.Count == 0)
+        public async Task<ActionResult<IEnumerable<BookingModel>>> GetEquipmentByBookingId(int id)
+        {
+            var bookings = await _context.BookingModel.Where(e => e.GuestId == id).ToListAsync();
+
+            if (bookings.Count == 0)
             {
                 return NotFound();
             }
 
-            return bookingModel;
+            return bookings;
         }
 
         // PUT: api/BookingModels/5

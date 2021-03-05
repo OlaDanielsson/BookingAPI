@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookingAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace BookingAPI.Controllers
 {
@@ -14,10 +15,12 @@ namespace BookingAPI.Controllers
     public class RoomModelsController : ControllerBase
     {
         private readonly BookingContext _context;
+        private readonly ILogger<RoomModelsController> logger;
 
-        public RoomModelsController(BookingContext context)
+        public RoomModelsController(BookingContext context, ILogger<RoomModelsController> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
 
@@ -25,6 +28,8 @@ namespace BookingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomModel>>> GetRoomModel()
         {
+            logger.LogInformation("Get all Rooms");
+            logger.LogWarning("API couldn't handle request");
             return await _context.RoomModel.ToListAsync(); // Det finns fel i kod
         }
 
@@ -32,10 +37,12 @@ namespace BookingAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomModel>> GetRoomModel(int id)
         {
+            logger.LogInformation("Get all Rooms by id");
             var roomModel = await _context.RoomModel.FindAsync(id);
 
             if (roomModel == null)
             {
+                logger.LogWarning("API couldn't handle get room by id request");
                 return NotFound();
             }
 
@@ -47,6 +54,9 @@ namespace BookingAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoomModel(int id, RoomModel roomModel)
         {
+            logger.LogInformation("Update room by id");
+            logger.LogWarning("API couldn't update room by id request");
+
             if (id != roomModel.Id)
             {
                 return BadRequest();
@@ -62,10 +72,12 @@ namespace BookingAPI.Controllers
             {
                 if (!RoomModelExists(id))
                 {
+                    logger.LogWarning("API couldn't update room by id request");
                     return NotFound();
                 }
                 else
                 {
+                    logger.LogWarning("API couldn't update room by id request");
                     throw;
                 }
             }
@@ -78,6 +90,8 @@ namespace BookingAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RoomModel>> PostRoomModel(RoomModel roomModel)
         {
+            logger.LogInformation("Create new room");
+            logger.LogWarning("API couldn't create new room");
             _context.RoomModel.Add(roomModel);
             await _context.SaveChangesAsync();
 
@@ -88,9 +102,11 @@ namespace BookingAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomModel(int id)
         {
+            logger.LogInformation("Deleted a room");
             var roomModel = await _context.RoomModel.FindAsync(id);
             if (roomModel == null)
             {
+                logger.LogWarning("API couldn't delete room");
                 return NotFound();
             }
 

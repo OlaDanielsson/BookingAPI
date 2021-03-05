@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookingAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace BookingAPI.Controllers
 {
@@ -14,42 +15,46 @@ namespace BookingAPI.Controllers
     public class BookingModelsController : ControllerBase
     {
         private readonly BookingContext _context;
+        private readonly ILogger<BookingModelsController> logger;
 
-        public BookingModelsController(BookingContext context)
+        public BookingModelsController(BookingContext context, ILogger<BookingModelsController> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
-        // GET: api/BookingModels
+        // GET: BookingModels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingModel()
         {
+            logger.LogInformation("Get all bookings");
+            logger.LogWarning("API couldn't handle request");
             return await _context.BookingModel.ToListAsync();
         }
 
-        // GET: api/BookingModels/5
+        //// GET: api/BookingModels/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<BookingModel>> GetBookingModel(int id)
+        //{
+        //    var bookingModel = await _context.BookingModel.FindAsync(id);
+
+        //    if (bookingModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return bookingModel;
+        //}
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookingModel>> GetBookingModel(int id)
+
+        public async Task<ActionResult<IEnumerable<BookingModel>>> GetBookingsByGuestId(int id)
         {
-            var bookingModel = await _context.BookingModel.FindAsync(id);
-
-            if (bookingModel == null)
-            {
-                return NotFound();
-            }
-
-            return bookingModel;
-        }
-
-        
-        [HttpGet("/BookingModels/GuestId")]
-
-        public async Task<ActionResult<IEnumerable<BookingModel>>> GetEquipmentByBookingId(int id)
-        {
+            logger.LogInformation("Get all bookings by guest id");
             var bookings = await _context.BookingModel.Where(e => e.GuestId == id).ToListAsync();
 
             if (bookings.Count == 0)
             {
+                logger.LogWarning("API couldn't handle request");
                 return NotFound();
             }
 
@@ -61,8 +66,10 @@ namespace BookingAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBookingModel(int id, BookingModel bookingModel)
         {
+            logger.LogInformation("Updating booking by id");
             if (id != bookingModel.Id)
             {
+                logger.LogWarning("API couldn't update database");
                 return BadRequest();
             }
 
@@ -76,10 +83,12 @@ namespace BookingAPI.Controllers
             {
                 if (!BookingModelExists(id))
                 {
+                    logger.LogWarning("API couldn't update database");
                     return NotFound();
                 }
                 else
                 {
+                    logger.LogWarning("API couldn't update database");
                     throw;
                 }
             }
@@ -92,6 +101,8 @@ namespace BookingAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<BookingModel>> PostBookingModel(BookingModel bookingModel)
         {
+            logger.LogInformation("A new booking on seasharphotel was booked");
+            logger.LogWarning("API couldn't handle booking a new room request");
             _context.BookingModel.Add(bookingModel);
             await _context.SaveChangesAsync();
 
@@ -102,9 +113,11 @@ namespace BookingAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBookingModel(int id)
         {
+            logger.LogInformation("A booking was deleted");
             var bookingModel = await _context.BookingModel.FindAsync(id);
             if (bookingModel == null)
             {
+                logger.LogWarning("API couldn't handle deleting request");
                 return NotFound();
             }
 

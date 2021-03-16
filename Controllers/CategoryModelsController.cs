@@ -57,8 +57,7 @@ namespace BookingAPI.Controllers
             logger.LogInformation("Updating Category by id");
 
             if (id != categoryModel.Id)
-            {
-                logger.LogWarning("API couldn't update database");
+            {       
                 return BadRequest();
             }
 
@@ -72,7 +71,6 @@ namespace BookingAPI.Controllers
             {
                 if (!CategoryModelExists(id))
                 {
-                    logger.LogWarning("API couldn't update database");
                     return NotFound();
                 }
                 else

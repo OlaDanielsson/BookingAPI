@@ -31,7 +31,7 @@ namespace BookingAPI.Controllers
             {
                 if (fileUpload.image.Length > 0)
                 {
-                    string path = _webHostEnviroment.WebRootPath + "\\Uploads\\";
+                    string path = "C:\\Uploads\\";
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);

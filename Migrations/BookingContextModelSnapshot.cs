@@ -26,9 +26,6 @@ namespace BookingAPI.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -42,8 +39,6 @@ namespace BookingAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("RoomId");
 
@@ -60,8 +55,8 @@ namespace BookingAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Img")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfBeds")
                         .HasColumnType("int");
@@ -99,17 +94,11 @@ namespace BookingAPI.Migrations
 
             modelBuilder.Entity("BookingAPI.Models.BookingModel", b =>
                 {
-                    b.HasOne("BookingAPI.Models.CategoryModel", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
                     b.HasOne("BookingAPI.Models.RoomModel", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("Room");
                 });

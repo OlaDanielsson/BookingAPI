@@ -30,7 +30,12 @@ namespace BookingAPI
         {
             services.AddDbContextPool<BookingContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
-
+            services.AddCors(o => o.AddPolicy("TheBookingApiPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            })); // Rad 33-38, la till för React projekt.
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,10 +60,11 @@ namespace BookingAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors("MyPolicy"); //La till för React projekt.
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors("TheBookingApiPolicy"); //La till för React projekt. Det är nu möjligt att hämta data.               
             });
         }
     }
